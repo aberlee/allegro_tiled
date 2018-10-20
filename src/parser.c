@@ -48,7 +48,7 @@ static void decode_layer_data(xmlNode *data_node, ALLEGRO_MAP_LAYER *layer)
 {
 	char *str = g_strstrip((char *)data_node->children->content);
 	int datalen = layer->width * layer->height;
-	layer->data = (char *)calloc(datalen, sizeof(char));
+	layer->data = (int *)calloc(datalen, sizeof(int));
 
 	char *encoding = get_xml_attribute(data_node, "encoding");
 	if (!encoding) {
@@ -106,15 +106,8 @@ static void decode_layer_data(xmlNode *data_node, ALLEGRO_MAP_LAYER *layer)
 
 			// every tile id takes 4 bytes
 			int i;
-			for (i = 0; i<len; i += 4) {
-				int tileid = 0;
-				tileid |= data[i];
-				tileid |= data[i+1] << 8;
-				tileid |= data[i+2] << 16;
-				tileid |= data[i+3] << 24;
-
-				layer->data[i/4] = tileid;
-			}
+			for (i = 0; i < len; i += 4)
+				layer->data[i/4] = *((int *)&data[i]);
 			/*	printf("layer dimensions: %dx%d, data length = %d\n",
 						layer->width, layer->height, len); */
 
@@ -126,15 +119,8 @@ static void decode_layer_data(xmlNode *data_node, ALLEGRO_MAP_LAYER *layer)
 		else {
 			// TODO: verify that this still works
 			int i;
-			for (i = 0; i<rawlen; i += 4) {
-				int tileid = 0;
-				tileid |= rawdata[i];
-				tileid |= rawdata[i+1] << 8;
-				tileid |= rawdata[i+2] << 16;
-				tileid |= rawdata[i+3] << 24;
-
-				layer->data[i/4] = tileid;
-			}
+			for (i = 0; i<rawlen; i += 4)
+				layer->data[i/4] = *((int *)&rawdata[i]);
 		}
 
 		g_free(rawdata);
@@ -376,7 +362,7 @@ ALLEGRO_MAP *al_open_map(const char *dir, const char *filename)
 			unsigned i, j;
 			for (i = 0; i < layer->height; i++) {
 				for (j = 0; j < layer->width; j++) {
-					char id = al_get_single_tile_id(layer, j, i);
+					int id = al_get_single_tile_id(layer, j, i);
 
 					if (id == 0) {
 						continue;

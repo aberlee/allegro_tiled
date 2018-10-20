@@ -52,7 +52,7 @@ struct _ALLEGRO_MAP_LAYER
 	float opacity;              // the layer's opacity
 	bool visible;               // 0 for hidden, 1 for visible
 	char *name;                 // name of the layer
-	char *data;                 // decoded data (tile layer only)
+	int *data;                  // decoded data (tile layer only)
 	GSList *objects;            // objects (object layer only)
 	int object_count;           // number of objects (object layer only)
 	GHashTable *properties;     // properties

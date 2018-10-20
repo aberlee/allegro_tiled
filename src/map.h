@@ -34,7 +34,7 @@
 #define FLIPPED_VERTICALLY_FLAG		0x40000000
 #define FLIPPED_DIAGONALLY_FLAG		0x20000000
 
-char al_get_single_tile_id(ALLEGRO_MAP_LAYER *layer, int x, int y);
+int al_get_single_tile_id(ALLEGRO_MAP_LAYER *layer, int x, int y);
 ALLEGRO_MAP_TILE *al_get_single_tile(ALLEGRO_MAP *map, ALLEGRO_MAP_LAYER *layer, int x, int y);
 ALLEGRO_MAP_TILE **al_get_tiles(ALLEGRO_MAP *map, int x, int y, int *length);
 ALLEGRO_MAP_OBJECT **al_get_objects(ALLEGRO_MAP_LAYER *layer, int *length);

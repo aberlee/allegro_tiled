@@ -51,8 +51,8 @@ void al_draw_tinted_layer_region_for_name(ALLEGRO_MAP *map, char *name, ALLEGRO_
 void al_draw_layer_region_for_name(ALLEGRO_MAP *map, char *name, float sx, float sy, float sw, float sh, float dx, float dy, int flags);
 
 // tile and object methods
-ALLEGRO_MAP_TILE *al_get_tile_for_id(ALLEGRO_MAP *map, char id);
-char al_get_single_tile_id(ALLEGRO_MAP_LAYER *layer, int x, int y);
+ALLEGRO_MAP_TILE *al_get_tile_for_id(ALLEGRO_MAP *map, int id);
+int al_get_single_tile_id(ALLEGRO_MAP_LAYER *layer, int x, int y);
 ALLEGRO_MAP_TILE *al_get_single_tile(ALLEGRO_MAP *map, ALLEGRO_MAP_LAYER *layer, int x, int y);
 ALLEGRO_MAP_TILE **al_get_tiles(ALLEGRO_MAP *map, int x, int y, int *length);
 ALLEGRO_MAP_OBJECT **al_get_objects(ALLEGRO_MAP_LAYER *layer, int *length);
