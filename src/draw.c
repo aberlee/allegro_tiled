@@ -45,8 +45,8 @@ static void _al_draw_orthogonal_tile_layer(ALLEGRO_MAP_LAYER *layer, ALLEGRO_MAP
 	// defer rendering until everything is drawn
 	al_hold_bitmap_drawing(true);
 
-	for (my = ystart; my <= yend; my++) {
-		for (mx = xstart; mx <= xend; mx++) {
+	for (my = ystart; my < yend; my++) {
+		for (mx = xstart; mx < xend; mx++) {
 			ALLEGRO_MAP_TILE *tile = al_get_single_tile(map, layer, mx, my);
 
 			if (!tile) {
@@ -148,6 +148,10 @@ void al_draw_tinted_map_region(ALLEGRO_MAP *map, ALLEGRO_COLOR tint, float sx, f
  */
 void al_draw_map_region(ALLEGRO_MAP *map, float sx, float sy, float sw, float sh, float dx, float dy, int flags)
 {
+	if (sx + sw > (float)(map->width * map->tile_width))
+		sw = (float)(map->width * map->tile_width) - sx;
+	if (sy + sh > (float)(map->height * map->tile_height))
+		sh = (float)(map->height * map->tile_height) - sy;
 	al_draw_tinted_map_region(map, al_map_rgba_f(1, 1, 1, 1), sx, sy, sw, sh, dx, dy, flags);
 }
 
